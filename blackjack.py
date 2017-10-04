@@ -7,8 +7,10 @@ class Card(object):
         self.rank = rank
     def __str__(self):
         suits=("","Hearts", "Spades", "Diamonds", "Clubs")
-        ranks = ("","Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King")
-        return("{0} of {1}".format(str(ranks[self.rank]), str(suits[self.suit])))
+        ranks = ("","Ace", "Two", "Three", "Four", "Five", "Six", "Seven",
+                 "Eight", "Nine", "Ten", "Jack", "Queen", "King")
+        return ("{0} of {1}".format(str(ranks[self.rank]),
+               str(suits[self.suit])))
 
 class Deck(object):
     """docstring for Deck."""
@@ -25,11 +27,11 @@ class Player(object):
     """docstring for Player."""
     def __init__(self, bankroll=100):
         self.bankroll = bankroll
-
+        self.hand = []
     def add_bankroll(self, amount):
         self.bankroll += amount
-
-class Hand(object):
-    """docstring for Hand."""
-    def __init__(self, arg):
-        self.arg = arg
+    def draw_card(self, card):
+        print(type(card))
+        self.hand.append(card)
+    def show_hand(self):
+        return self.hand
