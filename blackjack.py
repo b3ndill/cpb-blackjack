@@ -67,6 +67,22 @@ class Player(object):
         the cards in a players hand.
         """
         return self.hand
+    def show_score(self):
+        """Returns the score from the players hand. It assumes that
+        the ace is valued at 11 if the sum of the other cards is
+        below 11.
+        """
+        score = 0
+        hand_rank = [card[1] for card in self.hand]
+        for i in hand_rank:
+            if i > 10:
+                score += 10
+            else:
+                score += i
+        if 1 in hand_rank and score < 12:
+            return score + 10
+        else:
+            return score
 
 class Pot(object):
     """Registers and keeps track of players bets during each game.
