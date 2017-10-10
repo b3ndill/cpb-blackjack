@@ -53,13 +53,12 @@ class Player(object):
     def add_bankroll(self, amount):
         """Adds the specified amount to a players bankroll."""
         self.bankroll += amount
-        return self.bankroll
     def withdraw_bankroll(self, amount):
         """Subtracts the specified amount from the players bankroll"""
         if amount > self.bankroll:
             raise RuntimeError("Amount greater than available bankroll.")
         self.bankroll -= amount
-        return self.bankroll
+        return amount
     def draw_card(self, card):
         """Adds the specified card to a players hand."""
         self.hand.append(card)
@@ -68,3 +67,21 @@ class Player(object):
         the cards in a players hand.
         """
         return self.hand
+
+class Pot(object):
+    """Registers and keeps track of players bets during each game.
+
+    Attributes:
+        balance: An integer that stores the current balance of the pot.
+    """
+    def __init__(self, balance=0):
+        self.balance = balance
+    def add(amount):
+        """Adds the specified amount to the pot."""
+        self.balance += amount
+        return self.balance
+    def payout():
+        """Returns the pot balance and zeroes it."""
+        payout = self.balance
+        self.balance = 0
+        return payout
