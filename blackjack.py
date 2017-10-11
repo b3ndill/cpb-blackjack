@@ -92,7 +92,7 @@ class Pot(object):
     """
     def __init__(self, balance=0):
         self.balance = balance
-    def add(amount):
+    def add(self, amount):
         """Adds the specified amount to the pot."""
         self.balance += amount
         return self.balance
@@ -101,3 +101,64 @@ class Pot(object):
         payout = self.balance
         self.balance = 0
         return payout
+
+def check_bust(score):
+    if score > 21:
+        return True
+    else:
+        return False
+
+def main():
+    while True:
+        #Starting the game
+        print("Welcome to Blackjack!")
+        print("It's just you and the dealer! Your bankroll is 100 credits.\n")
+        dealer1 = Player(bankroll=500000000)
+        player1 = Player(bankroll=100)
+        pot1 = Pot()
+        while True:
+            #Betting
+            while True:
+                player1_bet = int(input("Please enter a bet. Minimum bet is 5 credits, maximum is 100: "))
+                if player1_bet in range(5, 101):
+                    pot1.add(player1.withdraw_bankroll(player1_bet))
+                    pot1.add(dealer1.withdraw_bankroll(player1_bet))
+                    break
+                print("Invalid input, please try again")
+            #The Deal
+            print("The dealer shuffles the cards and starts dealing...")
+            deck1 = Deck()
+            for i in range(0,2):
+                player1.draw_card(deck1.draw())
+                dealer1.draw_card(deck1.draw())
+            #The Play
+            while True:
+                print("Your hand is:")
+                for card in player1.show_hand():
+                    print(Card(*card))
+                print("Your score is: {0}".format(player1.show_score()))
+                hitstay = str(input("Would you like to hit or stay?: "))
+                while True:
+                    if hitstay in ("hit", "stay"):
+                        break
+                    print("Invalid input, please try again")
+                if hitstay == "hit":
+                    player1.draw_card(deck1.draw())
+                    continue
+                else:
+                    break
+            #The Dealer's Play
+            while True:
+                print("The dealer's hand is:")
+                for card in dealer1.show_hand():
+                    print(Card(*card))
+                while dealer1.show_score() < 17:
+                    print("The dealer draws another card.")
+                    dealer1.draw_card(deck1.draw())
+                break
+            print("The dealer's score is: {0}".format(dealer1.show_score()))
+            break
+        break
+
+if __name__ == "__main__":
+    main()
